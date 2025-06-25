@@ -16,10 +16,3 @@ Eleg-IA es una aplicación web impulsada por **Gemini 1.5 Flash** que permite co
 - 🎯 Ideal para procesos de selección, compras, análisis de perfiles, etc.
 
 ---
-
-## 🚀 Demo Rápido
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/tu-usuario/eleg-ia.git
-   cd eleg-ia
