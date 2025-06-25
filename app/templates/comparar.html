@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Comparar Opciones | Eleg-IA</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+  <script src="{{ url_for('static', filename='js/funciones.js') }}"></script>
+
+</head>
+<body>
+  <div class="container">
+    <!-- Sección 1: Instrucción -->
+    <section class="seccion">
+      <h2>¿Qué deseas comparar?</h2>
+      <textarea id="instruccion" placeholder="Ej: Comparar candidatos para el cargo de diseñador UX..."></textarea>
+    </section>
+
+    <!-- Sección 2: Cards dinámicas para clases -->
+    <section class="seccion">
+      <h2>Opciones a comparar</h2>
+      <div id="opciones-container">
+        <!-- Aquí se agregarán las cards -->
+      </div>
+      <button class="button-outline" onclick="agregarCard()">Agregar opción</button>
+      <button class="button-outline" onclick="guardarOpciones()">Guardar opción</button>
+    </section>
+
+    <!-- Sección 3: Resultados -->
+    <section class="seccion">
+      <h2>Resultado de la Comparación</h2>
+      <button class="button" onclick="realizarComparacion()">Comparar</button>
+      
+
+      <div id="resultado" class="resultado">
+        <!-- Tabla y análisis generado aparecerán aquí -->
+      </div>
+    </section>
+  </div>
+
+    <div id="lista-guardados" class="crud-lista">
+        <h3>Opciones guardadas:</h3>
+        <ul id="items-guardados"></ul>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eleg-IA | Toma de decisiones inteligentes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Eleg-IA</h1>
+            <p class="subtitle">
+                Comparación objetiva y asistida por IA para elegir la mejor opción.
+            </p>
+            <a href="{{ url_for('main.comparar') }}" class="button">Comenzar Comparación</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="info">
+            <div class="container">
+                <h2>¿Qué es Eleg-IA?</h2>
+                <p>
+                    Eleg-IA es una herramienta basada en Inteligencia Artificial que permite comparar diferentes opciones con atributos similares y te recomienda la mejor de forma objetiva y explicada.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <small>&copy; 2025 Eleg-IA. Proyecto MVP IA.</small>
+        </div>
+    </footer>
+</body>
+</html>
