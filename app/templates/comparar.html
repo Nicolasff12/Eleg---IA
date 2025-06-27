@@ -5,43 +5,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Comparar Opciones | Eleg-IA</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-  <script src="{{ url_for('static', filename='js/funciones.js') }}"></script>
-
 </head>
 <body>
-  <div class="container">
-    <!-- Sección 1: Instrucción -->
-    <section class="seccion">
-      <h2>¿Qué deseas comparar?</h2>
-      <textarea id="instruccion" placeholder="Ej: Comparar candidatos para el cargo de diseñador UX..."></textarea>
-    </section>
-
-    <!-- Sección 2: Cards dinámicas para clases -->
-    <section class="seccion">
-      <h2>Opciones a comparar</h2>
-      <div id="opciones-container">
-        <!-- Aquí se agregarán las cards -->
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="/" class="logo">🤖 Eleg-IA</a>
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="mostrarGuardados()">📁 Guardados</button>
       </div>
-      <button class="button-outline" onclick="agregarCard()">Agregar opción</button>
-      <button class="button-outline" onclick="guardarOpciones()">Guardar opción</button>
-    </section>
+    </div>
+  </nav>
 
-    <!-- Sección 3: Resultados -->
-    <section class="seccion">
-      <h2>Resultado de la Comparación</h2>
-      <button class="button" onclick="realizarComparacion()">Comparar</button>
-      
-
-      <div id="resultado" class="resultado">
-        <!-- Tabla y análisis generado aparecerán aquí -->
+  <div class="main-container">
+    <!-- Sección de búsqueda -->
+    <section class="search-section">
+      <h1>¿Qué deseas comparar?</h1>
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="instruccion" 
+          class="search-input"
+          placeholder="Ej: Comparar candidatos para el cargo de diseñador UX..."
+        />
       </div>
     </section>
-  </div>
 
-    <div id="lista-guardados" class="crud-lista">
-        <h3>Opciones guardadas:</h3>
-        <ul id="items-guardados"></ul>
+    <!-- Container estilo Versus -->
+    <div class="versus-container">
+      <div class="versus-header">
+        <h2>Opciones a comparar</h2>
+        <p style="color: #666;">Ingresa las opciones que deseas evaluar</p>
+      </div>
+
+      <!-- Layout de comparación -->
+      <div id="comparison-container">
+        <div class="comparison-layout" id="dual-comparison">
+          <!-- Opción 1 -->
+          <div class="option-panel" id="option-1">
+            <button class="btn btn-danger remove-option" onclick="eliminarOpcion(1)" style="display: none;">✕</button>
+            <div class="option-header">
+              <input 
+                type="text" 
+                class="option-title-input" 
+                placeholder="Nombre de la opción"
+                id="nombre-opcion-1"
+                onchange="actualizarCaracteristicas()"
+                oninput="mostrarBotonAutoLlenar(1)"
+              />
+            </div>
+            <div class="option-score" style="display: none;">
+              <div class="score-label">Puntuación</div>
+              <div class="score-value">-</div>
+            </div>
+            <div class="attributes-section">
+              <div class="attributes-header">
+                <label class="attributes-label">Atributos (nombre:valor)</label>
+                <button class="auto-suggest-btn" onclick="sugerirAtributos(1)" id="suggest-btn-1">
+                  ✨ Auto-llenar
+                </button>
+              </div>
+              <textarea 
+                class="attributes-input"
+                placeholder="ej: precio:1000, bateria:5000, camara:48"
+                id="atributos-opcion-1"
+                onchange="actualizarCaracteristicas()"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- VS Divider -->
+          <div class="versus-divider">
+            <div class="versus-circle">VS</div>
+          </div>
+
+          <!-- Opción 2 -->
+          <div class="option-panel" id="option-2">
+            <button class="btn btn-danger remove-option" onclick="eliminarOpcion(2)" style="display: none;">✕</button>
+            <div class="option-header">
+              <input 
+                type="text" 
+                class="option-title-input" 
+                placeholder="Nombre de la opción"
+                id="nombre-opcion-2"
+                onchange="actualizarCaracteristicas()"
+                oninput="mostrarBotonAutoLlenar(2)"
+              />
+            </div>
+            <div class="option-score" style="display: none;">
+              <div class="score-label">Puntuación</div>
+              <div class="score-value">-</div>
+            </div>
+            <div class="attributes-section">
+              <div class="attributes-header">
+                <label class="attributes-label">Atributos (nombre:valor)</label>
+                <button class="auto-suggest-btn" onclick="sugerirAtributos(2)" id="suggest-btn-2">
+                  ✨ Auto-llenar
+                </button>
+              </div>
+              <textarea 
+                class="attributes-input"
+                placeholder="ej: precio:1200, bateria:4500, camara:64"
+                id="atributos-opcion-2"
+                onchange="actualizarCaracteristicas()"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid para múltiples opciones (oculto por defecto) -->
+        <div class="multi-comparison-grid" id="multi-comparison" style="display: none;">
+          <!-- Las opciones se agregarán dinámicamente aquí -->
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="action-buttons">
+        <button class="btn btn-secondary" onclick="agregarOpcion()">➕ Agregar opción</button>
+        <button class="btn btn-secondary" onclick="guardarOpciones()">💾 Guardar opciones</button>
+        <button class="btn btn-primary" onclick="realizarComparacion()">🔍 Comparar</button>
+      </div>
     </div>
 
+    <!-- Sección de filtros de características -->
+    <div class="filters-section" id="filters-section">
+      <div class="filters-header">
+        <h3>🎯 Comparar por característica</h3>
+        <button class="btn btn-secondary" onclick="verTodasCaracteristicas()">Ver todas</button>
+      </div>
+      <div class="filters-container" id="filters-container">
+        <!-- Los filtros se generarán dinámicamente -->
+      </div>
+      <div id="characteristic-details">
+        <!-- Aquí se mostrarán los detalles de cada característica -->
+      </div>
+    </div>
+
+    <!-- Sección de resultados -->
+    <section class="results-section" id="resultado" style="display: none;">
+      <div class="results-header">
+        <h2>Resultado de la Comparación</h2>
+      </div>
+      <div id="resultado-contenido">
+        <!-- Los resultados se mostrarán aquí -->
+      </div>
+    </section>
+
+    <!-- Lista de opciones guardadas -->
+    <div class="saved-list" id="lista-guardados" style="display: none;">
+      <h3>Opciones guardadas:</h3>
+      <ul id="items-guardados"></ul>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/funciones.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/comparacion.js') }}"></script>
 </body>
 </html>
